@@ -1,0 +1,9 @@
+services:
+  fluentd:
+    build: .
+    volumes:
+      - ./fluent.conf:/fluentd/etc/fluent.conf
+      - ./mysqld.slow.log:/fio/log/mysqld.slow.log
+    # /tmpの容量を確保できないエラーに遭遇したので、下記のように明示的に容量を確保する  
+    tmpfs:
+      - /tmp:size=100M

@@ -1,0 +1,20 @@
+<source>
+  @type tail
+  path /fio/log/mysqld.slow.log
+  pos_file /tmp/slowQuery.log.pos
+  tag mysqld.slow
+  @label @es
+  read_from_head true
+  <parse>
+    @type multiline
+    format_firstline /^# Time/
+    format1 /(?<message>.*)/
+  </parse>
+</source>
+
+# @label @es を受け取って標準出力に出す設定
+<label @es>
+  <match mysqld.slow>
+    @type stdout
+  </match>
+</label>
